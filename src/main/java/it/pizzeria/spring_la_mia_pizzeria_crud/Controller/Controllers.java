@@ -16,6 +16,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/")
 public class Controllers {
+    @GetMapping("/")
+    public String InitialPage(){
+        return "redirect:/pizza";
+    }
 
     @Autowired
     private Pizze pizzaRepository; //pizzaRepository è l'oggetto
