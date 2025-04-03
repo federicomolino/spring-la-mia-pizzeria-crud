@@ -9,5 +9,4 @@ public class SpringLaMiaPizzeriaCrudApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
 	}
-
 }
