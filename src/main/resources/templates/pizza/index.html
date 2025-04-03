@@ -10,8 +10,11 @@
 <h1 class="text-center mb-3 mt-3">Lista Pizze</h1>
 
 <!-- Lista -->
-<div th:if="${list.isEmpty()}">
-    <span>Lista vuota</span>
+<div th:if="${list.isEmpty() and errorMessage == null}" class="alert alert-danger">
+    <span class="text-center">Lista vuota</span>
+</div>
+<div th:if="${errorMessage}" class="alert alert-danger">
+    <p th:text="${errorMessage}" class="text-center"></p>
 </div>
 
 <div th:unless="${list.isEmpty()}" class="container text-center mt-8">

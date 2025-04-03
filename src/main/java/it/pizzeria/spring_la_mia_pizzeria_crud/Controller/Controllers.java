@@ -31,6 +31,9 @@ public class Controllers {
             pizze = pizzaRepository.findAll();
         }else {
             pizze = pizzaRepository.findByNameContainingIgnoreCase(name);
+            if (pizze.isEmpty()){
+                model.addAttribute("errorMessage", "Pizza non trovata");
+            }
         }
         model.addAttribute("list", pizze);
         return "pizza/index";
