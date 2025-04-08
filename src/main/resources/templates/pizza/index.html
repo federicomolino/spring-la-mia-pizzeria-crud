@@ -20,13 +20,22 @@
 <div th:unless="${list.isEmpty()}" class="container text-center mt-8">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8">
-
+            <!--Pizza aggiunta-->
+            <div th:if="${success != null}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span th:text="${success}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
             <!-- Ricerca Pizza -->
-            <div class="d-flex mb-3">
+            <div class="d-flex mb-3 justify-content-between">
                 <form method="get" action="/pizza" class="d-flex">
                     <input class="form-control form-control-sm" type="text" name="name" placeholder="Cerca Pizza" aria-label=".form-control-sm example">
                     <button type="submit" class="btn btn-sm btn-primary ms-2">cerca</button>
                 </form>
+                <div>
+                    <a th:href="@{/addPizza}" class="btn btn-sm btn-primary ms-2">Aggiungi pizza</a>
+                </div>
             </div>
 
             <!-- Tabella con i risultati -->

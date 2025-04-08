@@ -2,19 +2,26 @@ package it.pizzeria.spring_la_mia_pizzeria_crud.Entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Pizza {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column()
     private Integer id;
 
+    @Column(unique = true)
+    @NotBlank(message = "Nome non valido")
     private String name;
 
+    @NotBlank(message = "Descrizione non valida")
     private String description;
 
+    @NotNull
+    @Min(value = 1, message = "Prezzo inserito non valido")
     private double price;
 
     public Integer getId() {
