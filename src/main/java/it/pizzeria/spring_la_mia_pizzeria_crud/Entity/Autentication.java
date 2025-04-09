@@ -1,6 +1,8 @@
 package it.pizzeria.spring_la_mia_pizzeria_crud.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Autentication {
@@ -10,15 +12,19 @@ public class Autentication {
     private Integer id;
 
     @Column(unique = true, nullable = false)
+    @NotBlank
     private String email;
 
     @Column(nullable = false)
+    @NotBlank
     private String password;
 
     @Column()
+    @NotNull
     private String name;
 
     @Column()
+    @NotNull
     private String surname;
 
     public Autentication (String email,String password, String name, String surname){
