@@ -58,9 +58,8 @@ public class Controllers {
 
     @GetMapping("/pizza")
     public String index(@RequestParam(name = "name" , required = false) String name, Model model, HttpSession session){
-        Autentication user = (Autentication) session.getAttribute("user");
-
         //verifico se l'utente si è autenticato
+        Autentication user = (Autentication) session.getAttribute("user");
         if (user == null){
             return "redirect:/autenticazione";
         }
@@ -104,7 +103,11 @@ public class Controllers {
 
     //Aggiungere Pizza
     @GetMapping("/addPizza")
-    public String ShowPageRegistrer(Model model){
+    public String ShowPageRegistrer(Model model, HttpSession session){
+        Autentication user = (Autentication) session.getAttribute("user");
+        if (session == null){
+            return "redirect:/autenticazione";
+        }
         model.addAttribute("formAdd", new Pizza());
         return "pizza/addPizza";
     }
@@ -113,6 +116,10 @@ public class Controllers {
     public String addPizza(@Valid @ModelAttribute("formAdd") Pizza pizzaForm, BindingResult bindingResult,
                            RedirectAttributes redirectAttributes){
         if (bindingResult.hasErrors()){
+            return "pizza/addPizza";
+        } else if (pizzaRepository.existsByName(pizzaForm.getName())) {
+            bindingResult.rejectValue("name", "messageError",
+                    "Nome pizza già presente nel sistema");
             return "pizza/addPizza";
         }
         //Salvo a db e torno sull'index
