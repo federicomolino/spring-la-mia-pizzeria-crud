@@ -127,4 +127,43 @@ public class Controllers {
         redirectAttributes.addFlashAttribute("success", "La pizza è stata aggiunta");
         return "redirect:/pizza";
     }
+
+    //Modifica pizza
+    @GetMapping("/pizza/editPizza/{id}")
+    public String ShowEditPizza(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("formAdd", pizzaRepository.findById(id).get());
+        return"pizza/editPizza";
+    }
+
+    @PostMapping("/pizza/editPizza/{id}")
+    public String EditPizza(@Valid @ModelAttribute("formAdd") Pizza pizzaForm,
+                            Model model, BindingResult bindingResult){
+
+        //Mi salvo l'oggetto e verifico se viene cambiato il nome
+        Pizza p = pizzaRepository.findById(pizzaForm.getId()).get();
+        if (!pizzaForm.getName().equals(p.getName())){
+            bindingResult.rejectValue("name","errorName",
+                    "Il nome non può essere modificato");
+
+        }
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("pizza", pizzaForm);
+            return "pizza/editPizza";
+        }
+        //salviamo i nuovi dati
+        pizzaForm.setDescription(pizzaForm.getDescription());
+        pizzaForm.setPrice(pizzaForm.getPrice());
+
+        pizzaRepository.save(pizzaForm);
+        return "redirect:/pizza";
+    }
+
+    //Cancella pizza
+    @PostMapping("pizza/delete/{id}")
+    public String DeletePizza(@PathVariable("id") Integer id){
+        //Cancello in base id
+        pizzaRepository.deleteById(id);
+        return "redirect:/pizza";
+    }
 }
